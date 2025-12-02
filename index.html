@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🕉️ KHAKHRA ORDER FORM</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    background: linear-gradient(to bottom, #000, #1a1a1a);
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+.header {
+    text-align: center;
+    padding: 25px;
+    font-size: 38px;
+    font-weight: 900;
+    color: red;
+    text-shadow: 2px 2px white;
+}
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    display: none;
+}
+.container.active {
+    display: block;
+}
+label {
+    display: block;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 500;
+}
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+}
+.btn {
+    width: 100%;
+    margin-top: 30px;
+    padding: 15px;
+    background: white;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn:hover {
+    background: #ff4444;
+    color: white;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.row input {
+    width: 48%;
+}
+.summary {
+    font-size: 18px;
+    line-height: 28px;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<div class="header">🕉️ KHAKHRA</div>
+
+<!-- Page 1 -->
+<div class="container active" id="page1">
+    <label>NAME</label>
+    <input type="text" id="name" placeholder="Enter your name" />
+
+    <label>ADDRESS</label>
+    <input type="text" id="address" placeholder="Enter your address" />
+
+    <label>MOBILE NUMBER</label>
+    <div class="row">
+        <select id="country">
+            <option value="india" selected>+91 India</option>
+            <option value="usa">+1 USA</option>
+            <option value="uk">+44 UK</option>
+            <option value="uae">+971 UAE</option>
+        </select>
+        <input type="number" id="mobile" placeholder="Enter number" />
+    </div>
+
+    <button class="btn" onclick="nextPage('page1','page2')">NEXT</button>
+</div>
+
+<!-- Page 2 -->
+<div class="container" id="page2">
+    <h2 style="text-align:center;">CHOOSE KHAKHRA FLAVOUR</h2>
+
+    <label>SADA (KG)</label>
+    <input type="number" id="sada" placeholder="Enter kg" />
+
+    <label>METHI (KG)</label>
+    <input type="number" id="methi" placeholder="Enter kg" />
+
+    <label>MASALA (KG)</label>
+    <input type="number" id="masala" placeholder="Enter kg" />
+
+    <button class="btn" onclick="nextPage('page2','page3')">NEXT</button>
+</div>
+
+<!-- Page 3 -->
+<div class="container" id="page3">
+    <h2 style="text-align:center;">TOTAL AMOUNT</h2>
+    <div class="summary" id="summary"></div>
+    <button class="btn" onclick="submitOrder()">SUBMIT</button>
+</div>
+
+<script>
+function nextPage(current, next) {
+    document.getElementById(current).classList.remove('active');
+    document.getElementById(next).classList.add('active');
+
+    if(next === 'page3') {
+        let name = document.getElementById('name').value;
+        let address = document.getElementById('address').value;
+        let mobile = document.getElementById('mobile').value;
+        let country = document.getElementById('country').selectedOptions[0].text;
+
+        let sada = Number(document.getElementById('sada').value) || 0;
+        let methi = Number(document.getElementById('methi').value) || 0;
+        let masala = Number(document.getElementById('masala').value) || 0;
+
+        let totalKg = sada + methi + masala;
+        let totalAmount = totalKg * 170;
+
+        document.getElementById('summary').innerHTML = `
+            <strong>Name:</strong> ${name}<br>
+            <strong>Address:</strong> ${address}<br>
+            <strong>Mobile:</strong> ${country} ${mobile}<br>
+            <strong>Flavours Ordered:</strong><br>
+            SADA: ${sada} KG<br>
+            METHI: ${methi} KG<br>
+            MASALA: ${masala} KG<br>
+            <strong>Total KG:</strong> ${totalKg} KG<br>
+            <strong>Total Amount:</strong> Rs ${totalAmount}
+        `;
+    }
+}
+
+function submitOrder() {
+    alert('Thank you! Your order has been submitted successfully.');
+}
+</script>
+</body>
+</html>
